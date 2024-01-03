@@ -6,6 +6,8 @@ import {
   Param,
   Patch,
   Post,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { BoardsService } from './boards.service';
 import { Board, BoardStatus } from './boards.model';
@@ -21,6 +23,7 @@ export class BoardsController {
   }
 
   @Post() // CRUD 의 C
+  @UsePipes(ValidationPipe) // built-in pipes
   createBoard(
     @Body() createBoardDto: CreateBoardDto,
     /*
