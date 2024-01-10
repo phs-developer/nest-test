@@ -25,12 +25,26 @@ export class CoummnityRepository {
     subCategoryId: number,
     content: string,
   ) {
-    const post = this.postRepository.create({
-      title: title,
-      content_url: content,
-      sub_category_id: subCategoryId,
-      user_id: userId,
+    const post = await this.postRepository
+      .createQueryBuilder()
+      .insert()
+      .into(Post)
+      .values({
+        title: title,
+        contentUrl: content,
+        subCategoryId: subCategoryId,
+        userId: userId,
+      })
+      .execute();
+
+    return post;
+  }
+
+  async getPostDetail(postId: number) {
+    const postDetail = await this.postRepository.findOne({
+      where: { id: postId },
     });
-    return await this.postRepository.save(post);
+    console.log('repository: ' + postDetail);
+    return postDetail;
   }
 }

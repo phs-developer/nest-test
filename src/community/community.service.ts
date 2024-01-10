@@ -14,4 +14,10 @@ export class CommunityService {
       content,
     );
   }
+
+  async getPostDetail(postId: number) {
+    const postDetail = await this.CommunityRepository.getPostDetail(postId);
+    console.log('service: ' + postDetail);
+    return postDetail;
+  }
 }
