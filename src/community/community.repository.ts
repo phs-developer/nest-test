@@ -44,11 +44,21 @@ export class CoummnityRepository {
     const postDetail = await this.postRepository.findOne({
       where: { id: postId },
     });
-    console.log('repository: ' + postDetail);
+    console.log(postId);
     return postDetail;
   }
 
-  async updatePost(postId, title, subCategoryId, content) {
+  async updatePost(
+    postId: number,
+    title: string,
+    subCategoryId: number,
+    content: string,
+    userId: number,
+  ) {
+    const originPost = await this.getPostDetail(postId);
+
+    console.log('@@originPost: ' + originPost);
+
     return await this.postRepository
       .createQueryBuilder()
       .update(Post)
@@ -56,13 +66,29 @@ export class CoummnityRepository {
         title: title,
         subCategoryId: subCategoryId,
         contentUrl: content,
+        userId: userId,
       })
       .where('post.id = :id ', { id: postId })
       .execute();
   }
 
-  async deletePost(postId) {
+  async deletePost(postId: number) {
     // 논리 삭제
     return await this.postRepository.softDelete({ id: postId });
+  }
+
+  async createComment(postId: number, userId: number, content: string) {
+    const result = await this.commentRepository
+      .createQueryBuilder()
+      .insert()
+      .into(Comment)
+      .values({
+        comment: content,
+        postId: postId,
+        userId: userId,
+      })
+      .execute();
+    console.log('레포 성공');
+    return result;
   }
 }

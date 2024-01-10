@@ -1,12 +1,19 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CreatePostDto {
   @IsNotEmpty()
+  @IsString()
   title: string;
 
   @IsNotEmpty()
-  subCategoryId: string;
+  @IsNumber()
+  subCategoryId: number;
 
   @IsNotEmpty()
+  @IsString()
   content: string;
+
+  @IsNotEmpty()
+  @IsNumber()
+  userId: number;
 }

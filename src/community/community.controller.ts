@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { CommunityService } from './community.service';
 import { CreatePostDto } from './Dto/Post.dto';
+import { createCommentDto } from './Dto/Comment.dto';
 
 @Controller('community')
 export class CommunityController {
@@ -16,8 +17,7 @@ export class CommunityController {
 
   @Post('/post')
   async createPost(@Body() postData: CreatePostDto) {
-    const userId: number = 111;
-    await this.communityService.createPost(postData, userId);
+    await this.communityService.createPost(postData);
     return { message: 'post created' };
   }
 
@@ -38,5 +38,13 @@ export class CommunityController {
   @Delete('/post/:postId')
   async deletePost(@Param('postId') postId: number) {
     return await this.communityService.deletePost(postId);
+  }
+
+  @Post('/post/:post_id/comment')
+  async createComment(
+    @Param('post_id') postId: number,
+    @Body() commentData: createCommentDto,
+  ) {
+    return await this.communityService.createComment(postId, commentData);
   }
 }
