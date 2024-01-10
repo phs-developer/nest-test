@@ -47,4 +47,17 @@ export class CoummnityRepository {
     console.log('repository: ' + postDetail);
     return postDetail;
   }
+
+  async updatePost(postId, title, subCategoryId, content) {
+    return await this.postRepository
+      .createQueryBuilder()
+      .update(Post)
+      .set({
+        title: title,
+        subCategoryId: subCategoryId,
+        contentUrl: content,
+      })
+      .where('post.id = :id ', { id: postId })
+      .execute();
+  }
 }
