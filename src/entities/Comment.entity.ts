@@ -19,14 +19,20 @@ export class Comment {
   @Column({ type: 'varchar', name: 'comment', length: 100 })
   comment_text: string;
 
+  @Column({ type: 'int', name: 'post_id', nullable: false })
+  postId: number;
+
+  @Column({ type: 'int', name: 'user_id', nullable: false })
+  userId: number;
+
   @CreateDateColumn({ nullable: false })
-  created_at: Date;
+  createdAt: Date;
 
   @UpdateDateColumn()
-  updated_at: Date;
+  updatedAt: Date;
 
   @DeleteDateColumn()
-  deleted_at: Date;
+  deletedAt: Date;
 
   @ManyToOne(() => Post, (post) => post.comments)
   post: Post;

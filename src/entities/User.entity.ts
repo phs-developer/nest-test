@@ -3,7 +3,6 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -25,17 +24,17 @@ export class User {
   username: string;
 
   @Column()
-  user_img_url: string;
+  userImgUrl: string;
 
   // 왜 CreateDateColumn 가 아닌 Column으로 사용 후, timestamp를 사용하셨는지.
   @CreateDateColumn({ type: 'timestamp', nullable: false })
-  created_at: Date;
+  createdAt: Date;
 
   @UpdateDateColumn()
-  updated_at: Date;
+  updatedAt: Date;
 
   @DeleteDateColumn()
-  deleted_at: Date;
+  deletedAt: Date;
 
   @OneToMany(() => Post, (post) => post.user)
   posts: Post[];
@@ -46,6 +45,6 @@ export class User {
   @OneToMany(() => Comment, (comment) => comment.user)
   comments: Comment[];
 
-  @ManyToOne(() => CommentLike, (commentLike) => commentLike.user)
+  @OneToMany(() => CommentLike, (commentLike) => commentLike.user)
   commentLikes: CommentLike[];
 }

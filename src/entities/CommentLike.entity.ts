@@ -1,4 +1,5 @@
 import {
+  Column,
   CreateDateColumn,
   Entity,
   ManyToOne,
@@ -12,8 +13,14 @@ export class CommentLike {
   @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
 
+  @Column({ type: 'int', name: 'comment_id', nullable: false })
+  commentId: number;
+
+  @Column({ type: 'int', name: 'user_id', nullable: false })
+  userId: number;
+
   @CreateDateColumn({ nullable: false })
-  created_at: Date;
+  createdAt: Date;
 
   @ManyToOne(() => Comment, (comment) => comment.commentLikes)
   comment: Comment;

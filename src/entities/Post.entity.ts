@@ -22,16 +22,22 @@ export class Post {
   title: string;
 
   @Column({ type: 'varchar', length: 2083 })
-  content_url: string;
+  contentUrl: string;
+
+  @Column({ type: 'tinyint', nullable: false })
+  subCategoryId: number;
+
+  @Column({ type: 'int', nullable: false })
+  userId: number;
 
   @CreateDateColumn({ nullable: false })
-  created_at: Date;
+  createdAt: Date;
 
   @UpdateDateColumn()
-  updated_at: Date;
+  updatedAt: Date;
 
   @DeleteDateColumn()
-  deleted_at: Date;
+  deletedAt: Date;
 
   @OneToMany(() => PostLike, (postlike) => postlike.post)
   postLikes: PostLike[];
