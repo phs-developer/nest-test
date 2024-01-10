@@ -1,4 +1,12 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { MainCategory } from './MainCategory.entity';
+import { Post } from './Post.entity';
 
 @Entity('sub_category')
 export class SubCategory {
@@ -8,10 +16,9 @@ export class SubCategory {
   @Column({ type: 'varchar', name: 'name', nullable: false })
   title: string;
 
-  @Column({
-    type: 'tinyint',
-    name: 'main_category_id',
-    nullable: false,
-  })
-  main_category_id: number;
+  @OneToMany(() => Post, (post) => post.subCategory)
+  posts: Post[];
+
+  @ManyToOne(() => MainCategory, (mainCategory) => mainCategory.subCategories)
+  mainCategory: MainCategory;
 }

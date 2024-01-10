@@ -3,9 +3,13 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Post } from './Post.entity';
+import { User } from './User.entity';
+import { CommentLike } from './CommentLike.entity';
 
 @Entity('comment')
 export class Comment {
@@ -15,12 +19,6 @@ export class Comment {
   @Column({ type: 'varchar', name: 'comment', length: 100 })
   comment_text: string;
 
-  @Column({ type: 'int', name: 'post_id', nullable: false })
-  post_id: number;
-
-  @Column({ type: 'int', name: 'user_id', nullable: false })
-  user_id: number;
-
   @CreateDateColumn({ nullable: false })
   created_at: Date;
 
@@ -29,4 +27,13 @@ export class Comment {
 
   @DeleteDateColumn()
   deleted_at: Date;
+
+  @ManyToOne(() => Post, (post) => post.comments)
+  post: Post;
+
+  @ManyToOne(() => User, (user) => user.comments)
+  user: User;
+
+  @ManyToOne(() => CommentLike, (commentLike) => commentLike.comment)
+  commentLikes: CommentLike[];
 }

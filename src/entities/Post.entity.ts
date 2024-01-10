@@ -3,9 +3,15 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { SubCategory } from './SubCategory.entity';
+import { User } from './User.entity';
+import { PostLike } from './PostLike.entity';
+import { Comment } from './Comment.entity';
 
 @Entity('post')
 export class Post {
@@ -18,12 +24,6 @@ export class Post {
   @Column({ type: 'varchar', length: 2083 })
   content_url: string;
 
-  @Column({ type: 'tinyint', nullable: false })
-  sub_category_id: number;
-
-  @Column({ type: 'int', nullable: false })
-  user_id: number;
-
   @CreateDateColumn({ nullable: false })
   created_at: Date;
 
@@ -32,4 +32,16 @@ export class Post {
 
   @DeleteDateColumn()
   deleted_at: Date;
+
+  @OneToMany(() => PostLike, (postlike) => postlike.post)
+  postLikes: PostLike[];
+
+  @OneToMany(() => Comment, (comment) => comment.post)
+  comments: Comment[];
+
+  @ManyToOne(() => SubCategory, (subCategory) => subCategory.posts)
+  subCategory: SubCategory;
+
+  @ManyToOne(() => User, (user) => user.posts)
+  user: User;
 }

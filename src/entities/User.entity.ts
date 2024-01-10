@@ -3,9 +3,15 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Post } from './Post.entity';
+import { PostLike } from './PostLike.entity';
+import { Comment } from './Comment.entity';
+import { CommentLike } from './CommentLike.entity';
 
 @Entity('user')
 export class User {
@@ -30,4 +36,16 @@ export class User {
 
   @DeleteDateColumn()
   deleted_at: Date;
+
+  @OneToMany(() => Post, (post) => post.user)
+  posts: Post[];
+
+  @OneToMany(() => PostLike, (postLike) => postLike.user)
+  postLikes: PostLike[];
+
+  @OneToMany(() => Comment, (comment) => comment.user)
+  comments: Comment[];
+
+  @ManyToOne(() => CommentLike, (commentLike) => commentLike.user)
+  commentLikes: CommentLike[];
 }
