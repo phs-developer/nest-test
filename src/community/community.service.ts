@@ -31,4 +31,8 @@ export class CommunityService {
       content,
     );
   }
+
+  async deletePost(postId: number) {
+    return await this.CommunityRepository.deletePost(postId);
+  }
 }

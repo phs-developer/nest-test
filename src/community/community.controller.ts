@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { CommunityService } from './community.service';
 import { CreatePostDto } from './Dto/Post.dto';
 
@@ -25,5 +33,10 @@ export class CommunityController {
     @Body() updateData: CreatePostDto,
   ) {
     return await this.communityService.updatePost(postId, updateData);
+  }
+
+  @Delete('/post/:postId')
+  async deletePost(@Param('postId') postId: number) {
+    return await this.communityService.deletePost(postId);
   }
 }

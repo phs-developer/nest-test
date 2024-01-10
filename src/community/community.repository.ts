@@ -60,4 +60,9 @@ export class CoummnityRepository {
       .where('post.id = :id ', { id: postId })
       .execute();
   }
+
+  async deletePost(postId) {
+    // 논리 삭제
+    return await this.postRepository.softDelete({ id: postId });
+  }
 }
